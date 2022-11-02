@@ -1,20 +1,14 @@
 blueprint:
-  name: Smartthing Button Event IKEA button remote 1, 2, or 5
+  name: Smartthing Button Event IKEA button remote (5 buttons)
   description: |
     Use IKEA Remote To Trigger Actions
 
   domain: automation
   input:
-    button_number:
-      name: 'Switch Number (Required)'
-      description: 'Number'
-      default: 1
+    device_id:
+      name: 'Switch Device ID (Required)'
       selector:
-        number:
-          min: 1
-          max: 60
-          mode: slider
-          step: 1
+        text:
     button_on_off:
       name: On off button press
       description: Action to run on press of on off button
@@ -82,63 +76,63 @@ trigger:
 action:
 
   - variables:
-      compare_input: !input 'button_number'
-      compare_name: "Switch {{compare_input}}"
-      switch_name: "{{ trigger.event.data.name }}"
+      compare_btn_limit: !input 'button_number'
+      compare_device_id: !input 'device_id'
+      received_device_id: "{{ trigger.event.data.device_id }}"
       button_id: "{{ trigger.event.data.component_id }}"
       action_type: "{{ trigger.event.data.value }}"
 
   - choose:
       - conditions:
           - "{{ action_type == 'pushed' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button5' }}"
         sequence: !input button_on_off
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button1' }}"
         sequence: !input button_up_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button1' }}"
         sequence: !input button_up_long
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button2' }}"
         sequence: !input button_down_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button2' }}"
         sequence: !input button_down_long
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button3' }}"
         sequence: !input button_left_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button3' }}"
         sequence: !input button_left_long
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button4' }}"
         sequence: !input button_right_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
-          - "{{ switch_name == compare_name}}"
+          - "{{ received_device_id == compare_device_id}}"
           - "{{ button_id == 'button4' }}"
         sequence: !input button_right_long
