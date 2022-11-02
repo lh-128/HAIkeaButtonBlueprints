@@ -103,35 +103,35 @@ action:
       - conditions:
           - "{{ action_type == 'pushed' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button2' }}"
+          - "{{ button_id == 'button3' }}"
         sequence: !input button_down_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button2' }}"
+          - "{{ button_id == 'button3' }}"
         sequence: !input button_down_long
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button3' }}"
+          - "{{ button_id == 'button4' }}"
         sequence: !input button_left_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button3' }}"
+          - "{{ button_id == 'button4' }}"
         sequence: !input button_left_long
 
       - conditions:
           - "{{ action_type == 'pushed' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button4' }}"
+          - "{{ button_id == 'button2' }}"
         sequence: !input button_right_short
 
       - conditions:
           - "{{ action_type == 'held' }}"
           - "{{ received_device_id == compare_device_id}}"
-          - "{{ button_id == 'button4' }}"
+          - "{{ button_id == 'button2' }}"
         sequence: !input button_right_long
