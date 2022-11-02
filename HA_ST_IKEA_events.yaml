@@ -76,7 +76,6 @@ trigger:
 action:
 
   - variables:
-      compare_btn_limit: !input 'button_number'
       compare_device_id: !input 'device_id'
       received_device_id: "{{ trigger.event.data.device_id }}"
       button_id: "{{ trigger.event.data.component_id }}"
