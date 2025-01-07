@@ -12,12 +12,6 @@ blueprint:
           filter:
             - integration: zha
               manufacturer: IKEA of Sweden
-    button_on_off:
-      name: On off button press
-      description: Action to run on press of on off button
-      default: []
-      selector:
-        action:
     button_up_short:
       name: Up button - short press
       description: Action to run on short brightness up press
