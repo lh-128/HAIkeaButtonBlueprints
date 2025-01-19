@@ -1,0 +1,75 @@
+blueprint:
+  name: IKEA RODRET remote control (2 buttons)
+  description: |
+    Use ZHA paired IKEA Remote To Trigger Actions.
+
+  domain: automation
+  input:
+    device_id:
+      name: 'Switch Device ID (Required)'
+      selector:
+        device:
+          filter:
+            - integration: zha
+              manufacturer: IKEA of Sweden
+    button_up_short:
+      name: Up button - short press
+      description: Action to run on short brightness up press
+      default: []
+      selector:
+        action:
+    button_up_long:
+      name: Up button - long press
+      description: Action to run on long brightness up press
+      default: []
+      selector:
+        action:
+    button_down_short:
+      name: Down button - short press
+      description: Action to run on short brightness down press
+      default: []
+      selector:
+        action:
+    button_down_long:
+      name: Down button - long press
+      description: Action to run on long brightness down press
+      default: []
+      selector:
+        action:
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+
+action:
+  - variables:
+      target_device_id: !input 'device_id'
+      received_device_id: "{{ trigger.event.data.device_id }}"
+      received_command: "{{ trigger.event.data.command }}"
+      received_args: "{{ trigger.event.data.args }}"
+
+  - choose:
+      - conditions:
+          - "{{ received_device_id == target_device_id}}"
+          - "{{ received_command == 'on' }}"
+        sequence: !input button_up_short
+
+      - conditions:
+          - "{{ received_device_id == target_device_id}}"
+          - "{{ received_command == 'move_with_on_off' }}"
+        sequence: !input button_up_long
+
+      - conditions:
+          - "{{ received_device_id == target_device_id}}"
+          - "{{ received_command == 'off' }}"
+        sequence: !input button_down_short
+
+      - conditions:
+          - "{{ received_device_id == target_device_id}}"
+          - "{{ received_command == 'move' }}"
+        sequence: !input button_down_long
